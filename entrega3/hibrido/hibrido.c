@@ -16,17 +16,11 @@ int main(int argc, char *argv[])
 	MPI_Status status;
 	double commTimes[6], commTime, totalTime;
 
-	/* Lee par�metros de la l�nea de comando
-	if ((argc != 2) || ((n = atoi(argv[1])) <= 0))
-	{
-		printf("\nUsar: %s size \n  size: Dimension de la matriz y el vector\n", argv[0]);
-		exit(1);
-	} */
-
 	/* Check command line parameters */
 	if ((argc != 4) || ((n = atoi(argv[1])) <= 0) || ((bs = atoi(argv[2])) <= 0) || ((n % bs) != 0))
 	{
 		printf("\nError en los parámetros. Usage: ./%s N BS (N debe ser multiplo de BS)\n", argv[0]);
+		printf("cantidad de argumentos:%i", argc);
 		exit(1);
 	}
 
@@ -99,7 +93,7 @@ int main(int argc, char *argv[])
 	// lo hacen todos
 
 	///////////////////////////////////
-	////////////FIBONACHI//////////////
+	////////////FIBONACCI//////////////
 	///////////////////////////////////
 
 	commTimes[0] = MPI_Wtime();
@@ -264,6 +258,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
+#pragma omp for
 		for (i = 0; i < stripSize * n; i++)
 		{
 			r[i] += (dff[i] * fnum);
