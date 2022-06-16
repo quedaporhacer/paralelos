@@ -4,6 +4,10 @@
 
 double dwalltime();
 
+int *F, *fibonacci, check = 1, maxF, minF, countF, count;
+int N, bs;
+double *A, *B, *resAB, *C, *D, *resDF, *R, *fibF, val, timetick, workTime;
+
 int main(int argc, char *argv[])
 {
 
@@ -13,9 +17,6 @@ int main(int argc, char *argv[])
         printf("\nError en los parámetros. Usage: ./%s N BS (N debe ser multiplo de BS)\n", argv[0]);
         exit(1);
     }
-
-    int *F, *fibonacci, check = 1, maxF, minF, countF, count;
-    double *A, *B, *resAB, *C, *D, *resDF, *R, *fibF, val, timetick;
 
     /* Aloca memoria par las matrices */
     A = (double *)malloc(sizeof(double) * N * N);
@@ -179,8 +180,8 @@ int main(int argc, char *argv[])
     }
 
     /* Stop timeming */
-    workTimeSequential = dwalltime() - timetick;
-    printf("Tiempo en segundos secuencial: %f\n", workTimeSequential);
+    workTime = dwalltime() - timetick;
+    printf("Tiempo en segundos secuencial: %f\n", workTime);
 
     /* Checking results */
     for (int i = 0; i < N; i++)

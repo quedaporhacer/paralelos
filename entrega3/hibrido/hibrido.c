@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
 #pragma omp parallel for reduction(+                                               \
 								   : localSum) reduction(max                       \
 														 : localMax) reduction(min \
-																			   : localMin)
+																			   : localMin) schedule(static)
 		for (i = 0; i < stripSize * n; i++)
 		{
 			localSum += f[i];
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 		int p, q, s;
 		int in, jn, ink, jnk, inkpn, jnkqn, inkpnq;
 
-#pragma omp for private(j, k, p, q, s, in, jn, ink, jnk, inkpn, jnkqn, inkpnq) nowait
+#pragma omp for private(i, j, k, p, q, s, in, jn, ink, jnk, inkpn, jnkqn, inkpnq) nowait schedule(static)
 		for (i = 0; i < stripSize; i += bs)
 		{
 			in = i * n;
@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
-#pragma omp for private(j, k, p, q, s, in, jn, ink, jnk, inkpn, jnkqn, inkpnq) nowait
+#pragma omp for private(i, j, k, p, q, s, in, jn, ink, jnk, inkpn, jnkqn, inkpnq) nowait schedule(static)
 		for (i = 0; i < stripSize; i += bs)
 		{
 			in = i * n;
@@ -230,7 +230,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
-#pragma omp for private(j, k, p, q, s, in, jn, ink, jnk, inkpn, jnkqn, inkpnq) nowait
+#pragma omp for private(i, j, k, p, q, s, in, jn, ink, jnk, inkpn, jnkqn, inkpnq) nowait schedule(static)
 		for (i = 0; i < stripSize; i += bs)
 		{
 			in = i * n;
@@ -258,23 +258,19 @@ int main(int argc, char *argv[])
 			}
 		}
 
-#pragma omp for
+#pragma omp for schedule(static)
 		for (i = 0; i < stripSize * n; i++)
 		{
 			r[i] += (dff[i] * fnum);
 		}
 
-#pragma omp sigle
-		{
-
-			commTimes[5] = MPI_Wtime();
-
-			MPI_Gather(r, n * stripSize, MPI_DOUBLE, r, n * stripSize, MPI_DOUBLE, COORDINATOR, MPI_COMM_WORLD);
-
-			commTimes[6] = MPI_Wtime();
-		}
-
 	} // FIN pragma omp parallels
+
+	commTimes[5] = MPI_Wtime();
+
+	MPI_Gather(r, n * stripSize, MPI_DOUBLE, r, n * stripSize, MPI_DOUBLE, COORDINATOR, MPI_COMM_WORLD);
+
+	commTimes[6] = MPI_Wtime();
 
 	MPI_Finalize();
 

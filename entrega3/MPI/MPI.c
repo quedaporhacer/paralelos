@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	} */
 
 	/* Check command line parameters */
-	if ((argc != 4) || ((n = atoi(argv[1])) <= 0) || ((bs = atoi(argv[2])) <= 0) || ((n % bs) != 0))
+	if ((argc != 3) || ((n = atoi(argv[1])) <= 0) || ((bs = atoi(argv[2])) <= 0) || ((n % bs) != 0))
 	{
 		printf("\nError en los parámetros. Usage: ./%s N BS (N debe ser multiplo de BS)\n", argv[0]);
 		exit(1);
@@ -71,23 +71,23 @@ int main(int argc, char *argv[])
 	{
 		for (i = 0; i < n; i++)
 			for (j = 0; j < n; j++)
-				a[i * n + j] = 1;
+				a[i * n + j] = rand() % 41;
 
 		for (i = 0; i < n; i++)
 			for (j = 0; j < n; j++)
-				b[j * n + i] = 1;
+				b[j * n + i] = rand() % 41;
 
 		for (i = 0; i < n; i++)
 			for (j = 0; j < n; j++)
-				c[j * n + i] = 1;
+				c[j * n + i] = rand() % 41;
 
 		for (i = 0; i < n; i++)
 			for (j = 0; j < n; j++)
-				d[i * n + j] = 1;
+				d[i * n + j] = rand() % 41;
 
 		for (i = 0; i < n; i++)
 			for (j = 0; j < n; j++)
-				f[j * n + i] = 1;
+				f[j * n + i] = rand() % 41;
 	}
 
 	// inicializar datos de fib
