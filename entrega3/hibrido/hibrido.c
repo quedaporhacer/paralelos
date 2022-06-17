@@ -4,7 +4,6 @@
 #include <omp.h>
 
 #define COORDINATOR 0
-#define MAX_THREADS 4
 
 int main(int argc, char *argv[])
 {
@@ -130,10 +129,10 @@ int main(int argc, char *argv[])
 #pragma omp parallel
 	{
 
-#pragma omp parallel for reduction(+                                               \
-								   : localSum) reduction(max                       \
-														 : localMax) reduction(min \
-																			   : localMin) schedule(static)
+#pragma omp for reduction(+                                               \
+						  : localSum) reduction(max                       \
+												: localMax) reduction(min \
+																	  : localMin) schedule(static)
 		for (i = 0; i < stripSize * n; i++)
 		{
 			localSum += f[i];
